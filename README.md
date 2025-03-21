@@ -1,7 +1,7 @@
 # oms-go
 
 ## Tools
-- `cosmtrek/air`: Live reload for Go apps
+- `cosmtrek/air` for hot reload
 - `gRPC` for communication between services
 - `RabbitMQ` as message broker
     - Retry mechanism
