@@ -1,6 +1,7 @@
 # oms-go
 
 ## Tools
+- `chi` for routing
 - `cosmtrek/air` for hot reload
 - `gRPC` for communication between services
 - `RabbitMQ` as message broker
@@ -12,7 +13,7 @@
 - `Stripe` for payments
 
 ## Architecture
-![alt text](images/architecture.png)
+![alt text](common/images/architecture.png)
 
 ## Services Breakdown
 Order Service: 
@@ -59,3 +60,13 @@ Cons:
 - Consistency: data is often scattered among the 
 - Possible duplication of code and features
 - Observability: Which because the system is made of the parts we need to collect more data, including traces, logs and other metrics.
+
+### gRPC
+- gRPC is a high-performance, open-source universal RPC framework.
+- gRPC can be used to create synchronous and immediate communication between services.
+
+### gRPC use cases
+- Microservices: Ideal for connecting services within a microservices architecture, facilitating efficient inter-service communication. 
+- Real-time applications: Suitable for applications requiring low-latency, real-time data exchange, such as streaming and IoT devices. 
+- Connecting devices and browsers: Can be used to connect mobile devices, browser clients, and other devices to backend services. 
+
