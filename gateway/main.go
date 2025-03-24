@@ -6,14 +6,27 @@ import (
 
 	_ "github.com/joho/godotenv/autoload"
 	"github.com/vp2305/common"
+	pb "github.com/vp2305/common/api"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 )
 
 var (
-	httpAddr = common.EnvString("HTTP_ADDR", ":8080")
+	httpAddr         = common.EnvString("HTTP_ADDR", ":8080")
+	orderServiceAddr = "localhost:2000"
 )
 
 func main() {
-	handler := NewHandler()
+	conn, err := grpc.NewClient(orderServiceAddr, grpc.WithTransportCredentials(insecure.NewCredentials()))
+	if err != nil {
+		log.Fatalf("failed to dial server: %v", err)
+	}
+	defer conn.Close()
+
+	log.Println("Dialing order service at ", orderServiceAddr)
+	c := pb.NewOrderServiceClient(conn)
+
+	handler := NewHandler(c)
 	mux := handler.registerRoutes()
 
 	log.Printf("Starting HTTP server at %s", httpAddr)

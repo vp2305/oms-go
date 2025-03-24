@@ -36,6 +36,11 @@ Payment Service:
 Kitchen Service
 - Long running process of a "simulated kitchen staff"
 
+### Pre-requisites Installation
+- Docker
+- golang grpc   
+    - cd common && make gen - This will generate the grpc code
+- air cli
 
 ## Notes
 ### Monolithic Architecture
@@ -64,9 +69,11 @@ Cons:
 ### gRPC
 - gRPC is a high-performance, open-source universal RPC framework.
 - gRPC can be used to create synchronous and immediate communication between services.
+- Strongly typed contracts between the services
+- Protocol buffers > JSON
+- Good candidate for server-to-server communication
 
 ### gRPC use cases
 - Microservices: Ideal for connecting services within a microservices architecture, facilitating efficient inter-service communication. 
 - Real-time applications: Suitable for applications requiring low-latency, real-time data exchange, such as streaming and IoT devices. 
 - Connecting devices and browsers: Can be used to connect mobile devices, browser clients, and other devices to backend services. 
-
