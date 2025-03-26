@@ -7,18 +7,17 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/vp2305/common"
 	pb "github.com/vp2305/common/api"
+	"github.com/vp2305/gateway/gateway"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
 
 type handler struct {
-	// gateway
-
-	client pb.OrderServiceClient
+	gateway gateway.OrdersGateway
 }
 
-func NewHandler(client pb.OrderServiceClient) *handler {
-	return &handler{client}
+func NewHandler(gateway gateway.OrdersGateway) *handler {
+	return &handler{gateway: gateway}
 }
 
 func (h *handler) registerRoutes() http.Handler {
@@ -47,7 +46,7 @@ func (h *handler) HandleCreateOrder(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	order, err := h.client.CreateOrder(r.Context(), &pb.CreateOrderRequest{
+	order, err := h.gateway.CreateOrder(r.Context(), &pb.CreateOrderRequest{
 		CustomerID: customerID,
 		Items:      items,
 	})

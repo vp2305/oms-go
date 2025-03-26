@@ -43,6 +43,14 @@ Kitchen Service
 - air cli
 
 ## Notes
+### Service Discovery
+- Service discovery is a key component of a microservices architecture
+- It's a mechanism that allows services to find and communicate with each other
+- It also helps us to handle unresponsive services, load balancing, and failover
+- 2 types of service discovery:
+    - Client-side discovery
+    - Server-side discovery
+
 ### Monolithic Architecture
 Pros:
 - Monolith architecture is more simpler which is a good thing! Specifically to deploy compared to distributed systems since we don't have to split the application into multiple parts that coordinate with each other.
