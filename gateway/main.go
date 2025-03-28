@@ -41,7 +41,7 @@ func main() {
 		}
 	}()
 
-	defer registry.Register(ctx, instanceID, serviceName, httpAddr)
+	defer registry.Deregister(ctx, instanceID, serviceName)
 
 	ordersGateway := gateway.NewGRPCGateway(registry)
 	handler := NewHandler(ordersGateway)
