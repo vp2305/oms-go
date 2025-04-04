@@ -67,6 +67,7 @@ Pros:
 - Smaller services: Smaller services are easier to understand, develop, and maintain.
 - Decoupling: Microservices are loosely coupled, so you can update one service without affecting the others.
 - Technology diversity: You can use different technologies for different services.
+
 Cons:
 - It's more resource intensive because when a system consists of multiple components, they are divided among multiple servers. They need to communicate and that communication increases the latency.
 - Harder to debug
