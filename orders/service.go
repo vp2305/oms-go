@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"errors"
 
 	"github.com/vp2305/common"
 	pb "github.com/vp2305/common/api"
@@ -44,13 +45,43 @@ func (s *service) ValidateOrder(ctx context.Context, p *pb.CreateOrderRequest) (
 	var itemsWithPrice []*pb.Item
 	for _, i := range mergedItems {
 		itemsWithPrice = append(itemsWithPrice, &pb.Item{
-			PriceID:  "price_1R9XiWRnokJdA0odrCdpCJoa",
 			ID:       i.ID,
 			Quantity: i.Quantity,
+			PriceID:  "price_1R9XiWRnokJdA0odrCdpCJoa",
 		})
 	}
 
 	return itemsWithPrice, nil
+}
+
+func (s *service) GetOrder(ctx context.Context, p *pb.GetOrderRequest) (*pb.Order, error) {
+	if p.OrderID == "" {
+		return nil, errors.New("order id cannot be empty")
+	}
+
+	if p.CustomerID == "" {
+		return nil, errors.New("customer id cannot be empty")
+	}
+
+	order := &pb.Order{
+		ID:         p.OrderID,
+		CustomerID: p.CustomerID,
+		Status:     "pending",
+		Items: []*pb.Item{
+			{
+				ID:       "1",
+				Quantity: 2,
+				PriceID:  "price_1R9XiWRnokJdA0odrCdpCJoa",
+			},
+			{
+				ID:       "2",
+				Quantity: 5,
+				PriceID:  "price_1R9XiWRnokJdA0odrCdpCJoa",
+			},
+		},
+	}
+
+	return order, nil
 }
 
 func mergeItemQuantities(items []*pb.ItemsWithQuantity) []*pb.ItemsWithQuantity {

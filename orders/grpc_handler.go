@@ -53,3 +53,14 @@ func (h *grpcHandler) CreateOrder(ctx context.Context, p *pb.CreateOrderRequest)
 
 	return o, nil
 }
+
+func (h *grpcHandler) GetOrder(ctx context.Context, p *pb.GetOrderRequest) (*pb.Order, error) {
+	log.Printf("Get order information! %+v", p)
+
+	order, err := h.service.GetOrder(ctx, p)
+	if err != nil {
+		return nil, err
+	}
+
+	return order, nil
+}

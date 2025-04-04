@@ -24,15 +24,18 @@ func (h *handler) registerRoutes() http.Handler {
 	r := chi.NewRouter()
 
 	r.Route("/v1", func(r chi.Router) {
-		r.Get("/health", h.HealthCheckHandler)
+		r.Get("/health", h.healthCheckHandler)
 
-		r.Post("/customers/{customerID}/orders", h.HandleCreateOrder)
+		r.Route("/customers", func(r chi.Router) {
+			r.Post("/{customerID}/orders", h.handleCreateOrder)
+			r.Get("/{customerID}/orders/{orderID}", h.handleGetOrder)
+		})
 	})
 
 	return r
 }
 
-func (h *handler) HandleCreateOrder(w http.ResponseWriter, r *http.Request) {
+func (h *handler) handleCreateOrder(w http.ResponseWriter, r *http.Request) {
 	customerID := r.PathValue("customerID")
 
 	var items []*pb.ItemsWithQuantity
@@ -66,7 +69,28 @@ func (h *handler) HandleCreateOrder(w http.ResponseWriter, r *http.Request) {
 	common.WriteJSON(w, http.StatusCreated, order)
 }
 
-func (h *handler) HealthCheckHandler(w http.ResponseWriter, r *http.Request) {
+func (h *handler) handleGetOrder(w http.ResponseWriter, r *http.Request) {
+	customerID := r.PathValue("customerID")
+	orderID := r.PathValue("orderID")
+
+	order, err := h.gateway.GetOrder(r.Context(), orderID, customerID)
+
+	errStatus := status.Convert(err)
+
+	if errStatus != nil {
+		if errStatus.Code() != codes.InvalidArgument {
+			common.WriteError(w, http.StatusBadRequest, errStatus.Message())
+			return
+		}
+
+		common.WriteError(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	common.WriteJSON(w, http.StatusOK, order)
+}
+
+func (h *handler) healthCheckHandler(w http.ResponseWriter, r *http.Request) {
 	data := map[string]string{
 		"status":  "ok",
 		"env":     "dev",

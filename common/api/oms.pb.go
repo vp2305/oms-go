@@ -211,7 +211,7 @@ func (x *ItemsWithQuantity) GetQuantity() int32 {
 
 type CreateOrderRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	CustomerID    string                 `protobuf:"bytes,1,opt,name=customerID,proto3" json:"customerID,omitempty"`
+	CustomerID    string                 `protobuf:"bytes,1,opt,name=CustomerID,proto3" json:"CustomerID,omitempty"`
 	Items         []*ItemsWithQuantity   `protobuf:"bytes,2,rep,name=Items,proto3" json:"Items,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -261,6 +261,58 @@ func (x *CreateOrderRequest) GetItems() []*ItemsWithQuantity {
 	return nil
 }
 
+type GetOrderRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	OrderID       string                 `protobuf:"bytes,1,opt,name=OrderID,proto3" json:"OrderID,omitempty"`
+	CustomerID    string                 `protobuf:"bytes,2,opt,name=CustomerID,proto3" json:"CustomerID,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetOrderRequest) Reset() {
+	*x = GetOrderRequest{}
+	mi := &file_api_oms_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetOrderRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetOrderRequest) ProtoMessage() {}
+
+func (x *GetOrderRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_oms_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetOrderRequest.ProtoReflect.Descriptor instead.
+func (*GetOrderRequest) Descriptor() ([]byte, []int) {
+	return file_api_oms_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *GetOrderRequest) GetOrderID() string {
+	if x != nil {
+		return x.OrderID
+	}
+	return ""
+}
+
+func (x *GetOrderRequest) GetCustomerID() string {
+	if x != nil {
+		return x.CustomerID
+	}
+	return ""
+}
+
 var File_api_oms_proto protoreflect.FileDescriptor
 
 const file_api_oms_proto_rawDesc = "" +
@@ -283,11 +335,18 @@ const file_api_oms_proto_rawDesc = "" +
 	"\bQuantity\x18\x02 \x01(\x05R\bQuantity\"b\n" +
 	"\x12CreateOrderRequest\x12\x1e\n" +
 	"\n" +
-	"customerID\x18\x01 \x01(\tR\n" +
-	"customerID\x12,\n" +
-	"\x05Items\x18\x02 \x03(\v2\x16.api.ItemsWithQuantityR\x05Items2B\n" +
+	"CustomerID\x18\x01 \x01(\tR\n" +
+	"CustomerID\x12,\n" +
+	"\x05Items\x18\x02 \x03(\v2\x16.api.ItemsWithQuantityR\x05Items\"K\n" +
+	"\x0fGetOrderRequest\x12\x18\n" +
+	"\aOrderID\x18\x01 \x01(\tR\aOrderID\x12\x1e\n" +
+	"\n" +
+	"CustomerID\x18\x02 \x01(\tR\n" +
+	"CustomerID2p\n" +
 	"\fOrderService\x122\n" +
 	"\vCreateOrder\x12\x17.api.CreateOrderRequest\x1a\n" +
+	".api.Order\x12,\n" +
+	"\bGetOrder\x12\x14.api.GetOrderRequest\x1a\n" +
 	".api.OrderB\x1eZ\x1cgithub.com/vp2305/common/apib\x06proto3"
 
 var (
@@ -302,20 +361,23 @@ func file_api_oms_proto_rawDescGZIP() []byte {
 	return file_api_oms_proto_rawDescData
 }
 
-var file_api_oms_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_api_oms_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_api_oms_proto_goTypes = []any{
 	(*Order)(nil),              // 0: api.Order
 	(*Item)(nil),               // 1: api.Item
 	(*ItemsWithQuantity)(nil),  // 2: api.ItemsWithQuantity
 	(*CreateOrderRequest)(nil), // 3: api.CreateOrderRequest
+	(*GetOrderRequest)(nil),    // 4: api.GetOrderRequest
 }
 var file_api_oms_proto_depIdxs = []int32{
 	1, // 0: api.Order.Items:type_name -> api.Item
 	2, // 1: api.CreateOrderRequest.Items:type_name -> api.ItemsWithQuantity
 	3, // 2: api.OrderService.CreateOrder:input_type -> api.CreateOrderRequest
-	0, // 3: api.OrderService.CreateOrder:output_type -> api.Order
-	3, // [3:4] is the sub-list for method output_type
-	2, // [2:3] is the sub-list for method input_type
+	4, // 3: api.OrderService.GetOrder:input_type -> api.GetOrderRequest
+	0, // 4: api.OrderService.CreateOrder:output_type -> api.Order
+	0, // 5: api.OrderService.GetOrder:output_type -> api.Order
+	4, // [4:6] is the sub-list for method output_type
+	2, // [2:4] is the sub-list for method input_type
 	2, // [2:2] is the sub-list for extension type_name
 	2, // [2:2] is the sub-list for extension extendee
 	0, // [0:2] is the sub-list for field type_name
@@ -332,7 +394,7 @@ func file_api_oms_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_api_oms_proto_rawDesc), len(file_api_oms_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   4,
+			NumMessages:   5,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
