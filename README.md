@@ -43,7 +43,7 @@ Kitchen Service
 - air cli
 
 ### Learn how to leverage the https://opentelemetry.io/docs/demo/
-    - Automatically instrument your code with OpenTelemetry
+- Automatically instrument your code with OpenTelemetry
 
 ## Notes
 ### Service Discovery
