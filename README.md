@@ -42,6 +42,9 @@ Kitchen Service
     - cd common && make gen - This will generate the grpc code
 - air cli
 
+### Learn how to leverage the https://opentelemetry.io/docs/demo/
+    - Automatically instrument your code with OpenTelemetry
+
 ## Notes
 ### Service Discovery
 - Service discovery is a key component of a microservices architecture

@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
 	"github.com/vp2305/common"
 	pb "github.com/vp2305/common/api"
 	"github.com/vp2305/gateway/gateway"
@@ -22,6 +23,14 @@ func NewHandler(gateway gateway.OrdersGateway) *handler {
 
 func (h *handler) registerRoutes() http.Handler {
 	r := chi.NewRouter()
+
+	r.Use(middleware.Logger)
+
+	// Static file server for public directory (serves files like /success.html)
+	fs := http.FileServer(http.Dir("public"))
+	r.Get("/*", func(w http.ResponseWriter, r *http.Request) {
+		fs.ServeHTTP(w, r)
+	})
 
 	r.Route("/v1", func(r chi.Router) {
 		r.Get("/health", h.healthCheckHandler)
